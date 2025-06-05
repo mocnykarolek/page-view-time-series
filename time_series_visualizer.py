@@ -13,7 +13,7 @@ df = df.set_index('date')
 # Clean data
 df = df[(df.value >= df.value.quantile(0.025)) & (df.value <= df.value.quantile(0.975))]
 
-
+print(df)
 
 def draw_line_plot():
     # Draw line plot
@@ -52,6 +52,7 @@ def draw_bar_plot():
     return fig
 
 def draw_box_plot():
+    df.index = pd.to_datetime(df.index, format='%Y-%m-%d')
     # Prepare data for box plots (this part is done!)
     df_box = df.copy()
     df_box.reset_index(inplace=True)
@@ -59,11 +60,36 @@ def draw_box_plot():
     df_box['month'] = [d.strftime('%b') for d in df_box.date]
 
     # Draw box plots (using Seaborn)
+    
+
+    # ax = df_box.plot(kind='box', figsize=(12,6))
+
+    # fig = ax.get_figure() 
+    fig, axes = plt.subplots(1,2, figsize=(12,5))
+
+    sns.boxplot(data=df_box, x = df_box.year, y=df_box.value, palette='Set1', ax=axes[0])
+    axes[0].set_title('Year-wise Box Plot (Trend)')
+    axes[0].set_xlabel('Year')
+    axes[0].set_ylabel('Page Views')
+    months_order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+    sns.boxplot(data=df_box, x = df_box.month, y=df_box.value, palette='Set2',order=months_order, ax=axes[1])
+    axes[1].set_title('Month-wise Box Plot (Seasonality)')
+    axes[1].set_xlabel('Month')
+    axes[1].set_ylabel('Page Views')
 
     
+    fig.tight_layout()
+
+    print(df_box)
+
+
 
 
 
     # Save image and return fig (don't change this part)
     fig.savefig('box_plot.png')
     return fig
+
+
+
