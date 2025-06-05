@@ -13,7 +13,7 @@ df = df.set_index('date')
 # Clean data
 df = df[(df.value >= df.value.quantile(0.025)) & (df.value <= df.value.quantile(0.975))]
 
-print(df)
+
 
 def draw_line_plot():
     # Draw line plot
@@ -36,7 +36,7 @@ def draw_bar_plot():
 
     
     
-    print(df_bar)
+    
     # Draw bar plot
     ax = df_bar.plot(kind='bar', figsize=(12,6))
 
@@ -81,7 +81,7 @@ def draw_box_plot():
     
     fig.tight_layout()
 
-    print(df_box)
+   
 
 
 
