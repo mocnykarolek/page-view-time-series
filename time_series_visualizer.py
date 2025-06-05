@@ -32,21 +32,25 @@ def draw_bar_plot():
     df_bar['month'] = df_bar.index.month
 
 
-    df_bar = df_bar.groupby(['year', 'month'])['value'].mean()
+    df_bar = df_bar.groupby(['year', 'month'])['value'].mean().unstack()
 
     
     
-    print(df)
+    print(df_bar)
     # Draw bar plot
+    ax = df_bar.plot(kind='bar', figsize=(12,6))
+
+    ax.set_ylabel('Average Page Views')
+    fig = ax.get_figure()
 
 
-
+    
 
 
     # Save image and return fig (don't change this part)
-    # fig.savefig('bar_plot.png')
-    # return fig
-draw_bar_plot()
+    fig.savefig('bar_plot.png')
+    return fig
+
 def draw_box_plot():
     # Prepare data for box plots (this part is done!)
     df_box = df.copy()
@@ -56,7 +60,7 @@ def draw_box_plot():
 
     # Draw box plots (using Seaborn)
 
-
+    
 
 
 
